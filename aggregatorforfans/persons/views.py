@@ -1,20 +1,18 @@
-from django.shortcuts import render
+from django.views import generic
 
 # Create your views here.
-
-from django.http import HttpResponse
-from django.shortcuts import render
 
 from .models import Person
 
 
-def index(request):
-    latest_persons_list = Person.objects.order_by('-id')[:5]
-    context = {
-        'latest_persons_list': latest_persons_list,
-    }
-    return render(request, 'persons/index.html', context)
+class IndexView(generic.ListView):
+    template_name = 'persons/index.html'
+    context_object_name = 'latest_persons_list'
+
+    def get_queryset(self):
+        return Person.objects.order_by('-id')[:5]
 
 
-def detail(request, person_id):
-    return HttpResponse("Person id: %s." % person_id)
+class DetailView(generic.DetailView):
+    model = Person
+    template_name = 'persons/detail.html'
