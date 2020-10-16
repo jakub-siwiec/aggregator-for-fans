@@ -26,7 +26,25 @@
     {% if person.race %}
         Race: {{ person.race }}
     {% endif %}
+    {% if person.links.all %}
     </p>
+    <p>Links list:</p>
+    <ul>
+    {% for link in person.links.all %}
+    <li> {{ link.website }}</li>
+    <li> {{ link.instagram }}</li>
+    <li> {{ link.twitter }}</li>    
+    {% endfor %}
+    </ul>
+    {% endif %}
+    {% if person.movies.all %}
+    <p>Movies:</p>
+    <ul>
+    {% for movie in person.movies.all %}
+    <li>{{ movie }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
 
   </body>
 </html>

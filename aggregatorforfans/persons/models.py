@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import slugify
 
 # Create your models here.
 
@@ -6,7 +7,7 @@ from django.db import models
 class Person(models.Model):
     creation_datetime = models.DateTimeField(auto_now_add=True)
     last_modification = models.DateTimeField(auto_now=True)
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     GENDER_LIST = (
         ("F", "Female"),
         ("M", "Male"),
@@ -25,13 +26,19 @@ class Person(models.Model):
     )
     race = models.CharField(
         max_length=1, choices=RACE_LIST, blank=True, null=True)
+    slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Person, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
 
 
 class Link(models.Model):
-    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+    person = models.ForeignKey(
+        Person, related_name="links", on_delete=models.CASCADE)
     website = models.URLField(blank=True, null=True, max_length=255)
     instagram = models.URLField(blank=True, null=True, max_length=255)
     twitter = models.URLField(blank=True, null=True, max_length=255)
@@ -41,7 +48,7 @@ class Link(models.Model):
 
 
 class Movie(models.Model):
-    person = models.ManyToManyField(Person)
+    person = models.ManyToManyField(Person, related_name="movies")
     title = models.CharField(max_length=255)
     link = models.URLField(max_length=255)
 
