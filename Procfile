@@ -1,0 +1,1 @@
+web: gunicorn aggregatorforfans.aggregatorforfans.wsgi --log-file -
