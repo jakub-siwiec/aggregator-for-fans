@@ -1,1 +1,1 @@
-web: gunicorn aggregatorforfans.aggregatorforfans.wsgi --log-file -
+web: gunicorn --chdir aggregatorforfans aggregatorforfans.wsgi --log-file -
