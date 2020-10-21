@@ -85,21 +85,24 @@ WSGI_APPLICATION = 'aggregatorforfans.wsgi.application'
 DB_MODE = config('DB_MODE', default=True, cast=bool)
 DATABASES = {}
 
-if DB_MODE {
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': config('DB_NAME'),
-            'USER': config('DB_USERNAME'),
-            'PASSWORD': config('DB_PASSWORD'),
-            'HOST': config('DB_HOST'),
-            'PORT': config('DB_PORT'),
+if DB_MODE:
+    {
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': config('DB_NAME'),
+                'USER': config('DB_USERNAME'),
+                'PASSWORD': config('DB_PASSWORD'),
+                'HOST': config('DB_HOST'),
+                'PORT': config('DB_PORT'),
+            }
         }
     }
-} else {
-    DATABASES['default'] = dj_database_url.config(
-        conn_max_age=600, ssl_require=True)
-}
+else:
+    {
+        DATABASES['default'] = dj_database_url.config(
+            conn_max_age=600, ssl_require=True)
+    }
 
 
 # Password validation
@@ -139,5 +142,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 django_heroku.settings(locals())
