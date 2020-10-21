@@ -86,23 +86,19 @@ DB_MODE = config('DB_MODE', default=True, cast=bool)
 DATABASES = {}
 
 if DB_MODE:
-    {
-        DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.postgresql',
-                'NAME': config('DB_NAME'),
-                'USER': config('DB_USERNAME'),
-                'PASSWORD': config('DB_PASSWORD'),
-                'HOST': config('DB_HOST'),
-                'PORT': config('DB_PORT'),
-            }
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': config('DB_NAME'),
+            'USER': config('DB_USERNAME'),
+            'PASSWORD': config('DB_PASSWORD'),
+            'HOST': config('DB_HOST'),
+            'PORT': config('DB_PORT'),
         }
     }
 else:
-    {
-        DATABASES['default'] = dj_database_url.config(
-            conn_max_age=600, ssl_require=True)
-    }
+    DATABASES['default'] = dj_database_url.config(
+        conn_max_age=600, ssl_require=True)
 
 
 # Password validation
