@@ -4,12 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap" rel="stylesheet">
+    <style type=text/css>
+      body {background-color: #a50104; color: #fcba04; font-family: 'Nunito', sans-serif;}
+    </style>
   </head>
   <body>
     <h1>Person number: {{ person.id }} and name: {{ person.name }}</h2>
     <p>
     {% if person.gender %}
-        Gender: {{ person.gender }}
+        Gender: {{ person.get_gender_display }}
     {% endif %}
     </p>
     <p>
@@ -24,7 +28,7 @@
     </p>
     <p>
     {% if person.race %}
-        Race: {{ person.race }}
+        Race: {{ person.get_race_display }}
     {% endif %}
     {% if person.links.all %}
     </p>
